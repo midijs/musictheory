@@ -1,3 +1,5 @@
+var TONE = 2;
+var SEMITONE = 1;
 
 var Music = {
 	/**************************************************************************
@@ -38,6 +40,48 @@ var Music = {
 	SEMITONE : 1,
 	TONE     : 2,
 	TRITONE  : 6,
+
+	/**************************************************************************
+	 * Degrees
+	 **************************************************************************/
+
+	TONIC        : 1,
+	SUPERTONIC   : 2,
+	MEDIANT      : 3,
+	SUBDOMINANT  : 4,
+	DOMINANT     : 5,
+	SUBMEDIANT   : 6,
+	LEADING_TONE : 7,
+	OCTAVE       : 8
+
+	/**************************************************************************
+	 * Scales
+	 **************************************************************************/
+
+	CHROMATIC_SCALE : [SEMITONE, SEMITONE, SEMITONE, SEMITONE, SEMITONE, SEMITONE,
+		SEMITONE, SEMITONE, SEMITONE, SEMITONE, SEMITONE, SEMITONE],
+
+	WHOLE_TONE_SCALE : [TONE, TONE, TONE, TONE, TONE, TONE],
+
+	/* Heptatonic scales */
+	/* Diatonic scales */
+	IONIAN_MODE     : [TONE, TONE, SEMITONE, TONE, TONE, TONE, SEMITONE],
+	DORIAN_MODE     : [TONE, SEMITONE, TONE, TONE, TONE, SEMITONE, TONE],
+	PHRYGIAN_MODE   : [SEMITONE, TONE, TONE, TONE, SEMITONE, TONE, TONE],
+	LYDIAN_MODE     : [TONE, TONE, TONE, SEMITONE, TONE, TONE, SEMITONE],
+	MIXOLYDIAN_MODE : [TONE, TONE, SEMITONE, TONE, TONE, SEMITONE, TONE],
+	AEOLIAN_MODE    : [TONE, SEMITONE, TONE, TONE, SEMITONE, TONE, TONE],
+	LOCRIAN_MODE    : [SEMITONE, TONE, TONE, SEMITONE, TONE, TONE, TONE],
+
+	MAJOR_SCALE : Music.IONIAN_MODE,
+	DOMINANT_SCALE : Music.MIXOLYDIAN_MODE,
+
+	NATURAL_MINOR_SCALE : Music.AEOLIAN_MODE,
+	HARMONIC_MINOR_SCALE : [TONE, SEMITONE, TONE, TONE, SEMITONE, Music.MINOR_THIRD, SEMITONE],
+
+	/* Pentatonic scales */
+	MAJOR_PENTATONIC_SCALE : [TONE, TONE, Music.MINOR_THIRD, TONE, Music.MINOR_THIRD],
+	MINOR_PENTATONIC_SCALE : [Music.MINOR_THIRD, TONE, TONE, Music.MINOR_THIRD, TONE],
 
 	/**************************************************************************
 	 * Chords
@@ -93,6 +137,29 @@ var Music = {
 		});
 
 		return newChord;
+	},
+
+	/**
+	 * Generates a scale.
+	 *
+	 * @param {number} root    Root note
+	 * @param {array} scale    Scale type
+	 *
+	 * @returns {array}    Scale
+	 */
+	generateScale(root, scale) {
+		var newScale = [root];
+
+		scale.forEach(function(value, index) {
+			if (index === 0) {
+				newSacale.push(value + root);
+			}
+			else {
+				newScale.push(newScale[index - 1] + value + root);
+			}
+		});
+
+		return newScale;
 	}
 };
 
