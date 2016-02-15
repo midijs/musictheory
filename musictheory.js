@@ -113,6 +113,35 @@ var Music = {
 	SECOND_INVERSION : [Music.PERFECT_OCTAVE, Music.PERFECT_OCTAVE, Music.PERFECT_UNISON],
 
 	/**************************************************************************
+	 * Rhythm
+	 **************************************************************************/
+
+	/* American names */
+	MAXIMA : 8,
+	LONGA : 4,
+	DOUBLE_WHOLE_NOTE : 2,
+	WHOLE_NOTE : 1,
+	HALF_NOTE : 1/2,
+	QUARTER_NOTE : 1/4,
+	EIGHT_NOTE : 1/8,
+	SIXTEENTH_NOTE : 1/16,
+	THIRTY_SECOND_NOTE : 1/30,
+	SIXTY_FOURTH_NOTE : 1/64,
+	HUNDRED_TWENTY_EIGHT_NOTE : 1/128,
+	TWO_HUNDRED_FIFTY_SIXTH_NOTE : 1/256,
+
+	/* British names */
+	BREVE : 2,
+	SEMIBREVE : 1,
+	MINIM : 1/2,
+	CROTCHET : 1/4,
+	QUAVER : 1/8,
+	SEMIQUAVER : 1/16,
+	DEMISEMIQUAVER : 1/64,
+	SEMIHEMIDEMISEMIQUAVER : 1/128,
+	DEMISEMIHEMIDEMISEMIQUAVER : 1/256,
+
+	/**************************************************************************
 	 * Helper functions
 	 **************************************************************************/
 
@@ -120,23 +149,23 @@ var Music = {
 	 * Generates a chord.
 	 *
 	 * @param {number} root        Root note
-	 * @param {array} chord        Chord type
+	 * @param {array} quality      Chord quality
 	 * @param {array} inversion    Chord inversion
 	 *
 	 * @returns {array}    Chord
 	 */
-	generateChord(root, chord, inversion) {
+	generateChord : function(root, quality, inversion) {
 		if (typeof inversion === 'undefined') {
 			inversion = Music.ROOT_POSITION;
 		}
 
-		var newChord = [];
+		var chord = [];
 
-		chord.forEach(function(value, index) {
+		quality.forEach(function(value, index) {
 			newChord.push(value + root + inversion[index]);
 		});
 
-		return newChord;
+		return chord;
 	},
 
 	/**
@@ -147,7 +176,7 @@ var Music = {
 	 *
 	 * @returns {array}    Scale
 	 */
-	generateScale(root, scale) {
+	generateScale : function(root, scale) {
 		var newScale = [root];
 
 		scale.forEach(function(value, index) {
@@ -160,6 +189,19 @@ var Music = {
 		});
 
 		return newScale;
+	},
+
+	/**
+	 * Increases the relative duration of the specified note by adding modifier
+	 * dots.
+	 *
+	 * @param {number} note    Relative duration of the note.
+	 * @param {number} dots    Number of dots to add to the note.
+	 *
+	 * @returns {number}
+	 */
+	dotted : function(note, dots) {
+		return note + ((Math.pow(2, dots) - 1) / Math.pow(2, dots));
 	}
 };
 
