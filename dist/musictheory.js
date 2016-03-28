@@ -1,74 +1,6 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.chord = chord;
-exports.scale = scale;
-exports.dotted = dotted;
-
-var _trias = require('./trias');
-
-/**
- * Generates a chord.
- *
- * @param {number} root        Root note
- * @param {array} quality      Chord quality
- * @param {array} inversion    Chord inversion
- *
- * @returns {array}    Chord
- */
-function chord(root, quality, inversion) {
-  if (typeof inversion === 'undefined') {
-    inversion = _trias.ROOT_POSITION;
-  }
-
-  var chord = [];
-
-  quality.forEach(function (value, index) {
-    newChord.push(value + root + inversion[index]);
-  });
-
-  return chord;
-};
-
-/**
- * Generates a scale.
- *
- * @param {number} root    Root note
- * @param {array} scale    Scale type
- *
- * @returns {array}    Scale
- */
-function scale(root, scale) {
-  var newScale = [root];
-
-  scale.forEach(function (value, index) {
-    if (index === 0) {
-      newSacale.push(value + root);
-    } else {
-      newScale.push(newScale[index - 1] + value + root);
-    }
-  });
-
-  return newScale;
-};
-
-/**
- * Increases the relative duration of the specified note by adding modifier
- * dots.
- *
- * @param {number} note    Relative duration of the note.
- * @param {number} dots    Number of dots to add to the note.
- *
- * @returns {number}
- */
-function dotted(note, dots) {
-  return note + (Math.pow(2, dots) - 1) / Math.pow(2, dots);
-};
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
@@ -84,6 +16,10 @@ var _scales = require('./scales');
 
 var Scales = _interopRequireWildcard(_scales);
 
+var _utils = require('./utils');
+
+var Utils = _interopRequireWildcard(_utils);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var MusicTheory = {
@@ -92,6 +28,8 @@ var MusicTheory = {
 	Scales: Scales,
 	Rythm: Rythm
 };
+
+Object.assign(MusicTheory, Utils);
 
 exports.default = MusicTheory;
 module.exports = exports['default'];
@@ -170,12 +108,6 @@ exports.MINOR_SCALE = exports.MAJOR_SCALE = exports.LOCRIAN_MODE = exports.AEOLI
 
 var _intervals = require('./intervals');
 
-var _modes = require('./modes');
-
-var Modes = _interopRequireWildcard(_modes);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 var CHROMATIC_SCALE = exports.CHROMATIC_SCALE = [_intervals.SEMITONE, _intervals.SEMITONE, _intervals.SEMITONE, _intervals.SEMITONE, _intervals.SEMITONE, _intervals.SEMITONE, _intervals.SEMITONE, _intervals.SEMITONE, _intervals.SEMITONE, _intervals.SEMITONE, _intervals.SEMITONE, _intervals.SEMITONE];
 var WHOLE_TONE_SCALE = exports.WHOLE_TONE_SCALE = [_intervals.TONE, _intervals.TONE, _intervals.TONE, _intervals.TONE, _intervals.TONE, _intervals.TONE, _intervals.TONE];
 
@@ -187,8 +119,8 @@ var MIXOLYDIAN_MODE = exports.MIXOLYDIAN_MODE = [_intervals.TONE, _intervals.TON
 var AEOLIAN_MODE = exports.AEOLIAN_MODE = [_intervals.TONE, _intervals.SEMITONE, _intervals.TONE, _intervals.TONE, _intervals.SEMITONE, _intervals.TONE, _intervals.TONE];
 var LOCRIAN_MODE = exports.LOCRIAN_MODE = [_intervals.SEMITONE, _intervals.TONE, _intervals.TONE, _intervals.SEMITONE, _intervals.TONE, _intervals.TONE, _intervals.TONE];
 
-var MAJOR_SCALE = exports.MAJOR_SCALE = Modes.IONIAN_MODE;
-var MINOR_SCALE = exports.MINOR_SCALE = Modes.AEOLIAN_MODE;
+var MAJOR_SCALE = exports.MAJOR_SCALE = IONIAN_MODE;
+var MINOR_SCALE = exports.MINOR_SCALE = AEOLIAN_MODE;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -206,3 +138,71 @@ var DIMINISHED_TRIAD = exports.DIMINISHED_TRIAD = [_intervals.PERFECT_UNISON, _i
 var ROOT_POSITION = exports.ROOT_POSITION = [_intervals.PERFECT_UNISON, _intervals.PERFECT_UNISON, _intervals.PERFECT_UNISON];
 var FIRST_INVERSION = exports.FIRST_INVERSION = [_intervals.PERFECT_OCTAVE, _intervals.PERFECT_UNISON, _intervals.PERFECT_UNISON];
 var SECOND_INVERSION = exports.SECOND_INVERSION = [_intervals.PERFECT_OCTAVE, _intervals.PERFECT_OCTAVE, _intervals.PERFECT_UNISON];
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.chord = chord;
+exports.scale = scale;
+exports.dotted = dotted;
+
+var _triads = require('./triads');
+
+/**
+ * Generates a chord.
+ *
+ * @param {number} root        Root note
+ * @param {array} quality      Chord quality
+ * @param {array} inversion    Chord inversion
+ *
+ * @returns {array}    Chord
+ */
+function chord(root, quality, inversion) {
+  if (typeof inversion === 'undefined') {
+    inversion = _triads.ROOT_POSITION;
+  }
+
+  var chord = [];
+
+  quality.forEach(function (value, index) {
+    newChord.push(value + root + inversion[index]);
+  });
+
+  return chord;
+};
+
+/**
+ * Generates a scale.
+ *
+ * @param {number} root    Root note
+ * @param {array} scale    Scale type
+ *
+ * @returns {array}    Scale
+ */
+function scale(root, scale) {
+  var newScale = [root];
+
+  scale.forEach(function (value, index) {
+    if (index === 0) {
+      newSacale.push(value + root);
+    } else {
+      newScale.push(newScale[index - 1] + value + root);
+    }
+  });
+
+  return newScale;
+};
+
+/**
+ * Increases the relative duration of the specified note by adding modifier
+ * dots.
+ *
+ * @param {number} note    Relative duration of the note.
+ * @param {number} dots    Number of dots to add to the note.
+ *
+ * @returns {number}
+ */
+function dotted(note, dots) {
+  return note + (Math.pow(2, dots) - 1) / Math.pow(2, dots);
+};

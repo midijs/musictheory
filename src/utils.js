@@ -1,4 +1,4 @@
-import {ROOT_POSITION} from './trias';
+import {ROOT_POSITION} from './triads';
 
 /**
  * Generates a chord.
