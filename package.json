@@ -1,11 +1,10 @@
 {
   "name": "musictheory",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Music theory helper",
-  "main": "dist/musictheory.js",
-  "jsnext:main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build:babel": "babel src --out-file dist/musictheory.js",
+    "build:babel": "babel src -d dist",
     "build": "npm run build:babel",
     "test": "mocha tests/*.js"
   },
