@@ -1,6 +1,6 @@
 {
   "name": "musictheory",
-  "version": "1.0.2",
+  "version": "1.0.9",
   "description": "Music theory helper",
   "main": "dist/index.js",
   "scripts": {
@@ -26,6 +26,7 @@
   "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-plugin-add-module-exports": "^0.1.2",
+    "babel-plugin-transform-object-assign": "^6.5.0",
     "babel-preset-es2015": "^6.5.0"
   }
 }

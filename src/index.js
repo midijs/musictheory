@@ -1,10 +1,11 @@
-import * as Triads from './triads';
+import {chord} from './chord';
 import * as Intervals from './intervals';
 import * as Scales from './scales';
 import * as Utils from './utils';
+import * as Rythm from './rythm';
 
 var MusicTheory = {
-	Triads    : Triads,
+	chord     : chord,
 	Intervals : Intervals,
 	Scales    : Scales,
 	Rythm     : Rythm,

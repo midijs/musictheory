@@ -1,29 +1,6 @@
 import {ROOT_POSITION} from './triads';
 
 /**
- * Generates a chord.
- *
- * @param {number} root        Root note
- * @param {array} quality      Chord quality
- * @param {array} inversion    Chord inversion
- *
- * @returns {array}    Chord
- */
-export function chord(root, quality, inversion) {
-	if (typeof inversion === 'undefined') {
-		inversion = ROOT_POSITION;
-	}
-
-	var chord = [];
-
-	quality.forEach(function(value, index) {
-		newChord.push(value + root + inversion[index]);
-	});
-
-	return chord;
-};
-
-/**
  * Generates a scale.
  *
  * @param {number} root    Root note
