@@ -1,11 +1,12 @@
 {
   "name": "musictheory",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Music theory helper",
   "main": "dist/index.js",
   "scripts": {
     "build:babel": "babel src -d dist",
-    "build": "npm run build:babel",
+    "build:browserify": "mkdir -p browser && browserify dist/index.js --standalone Musictheory > browser/musictheory.js",
+    "build": "npm run build:babel && npm run build:browserify",
     "test": "mocha tests/*.js"
   },
   "repository": {
@@ -27,6 +28,7 @@
     "babel-cli": "^6.5.1",
     "babel-plugin-add-module-exports": "^0.1.2",
     "babel-plugin-transform-object-assign": "^6.5.0",
-    "babel-preset-es2015": "^6.5.0"
+    "babel-preset-es2015": "^6.5.0",
+    "browserify": "^13.0.0"
   }
 }

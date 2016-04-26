@@ -2,3 +2,5 @@ src
 node_modules
 .babelrc
 .gitignore
+test.html
+browser

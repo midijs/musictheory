@@ -1,6 +1,6 @@
 import {PERFECT_UNISON, MAJOR_THIRD, PERFECT_FIFTH, MINOR_THIRD,
 	AUGMENTED_FIFTH, DIMINISHED_FIFTH, PERFECT_OCTAVE} from './intervals';
-import Notes from './notes';
+import {note} from './notes';
 
 /* Chord qualities */
 const MAJOR_TRIAD = [PERFECT_UNISON, MAJOR_THIRD, PERFECT_FIFTH];
@@ -14,30 +14,23 @@ const FIRST_INVERSION = [PERFECT_OCTAVE, PERFECT_UNISON, PERFECT_UNISON];
 const SECOND_INVERSION = [PERFECT_OCTAVE, PERFECT_OCTAVE,
 	PERFECT_UNISON];
 
-const CHORD_REGEX = /^([cdefgab]#?[0-9])(m|dim|aug)?$/i;
-
-const MAJOR_FLAG = undefined;
-const MINOR_FLAG = 'm';
-const AUGMENTED_FLAG = 'aug';
-const DIMINISHED_FLAG = 'dim';
+const CHORD_REGEX = /^([cdefgab])#?([0-9]|)(M|m|maj|min|dim|aug|)$/i;
 
 var Qualities = {
-	[MAJOR_FLAG]      : MAJOR_TRIAD,
-	[MINOR_FLAG]      : MINOR_TRIAD,
-	[AUGMENTED_FLAG]  : AUGMENTED_TRIAD,
-	[DIMINISHED_FLAG] : DIMINISHED_TRIAD
+	''    : MAJOR_TRIAD,
+	'M'   : MAJOR_TRIAD,
+	'maj' : MAJOR_TRIAD,
+	'm'   : MINOR_TRIAD,
+	'min' : MINOR_TRIAD,
+	'dim' : DIMINISHED_TRIAD,
+	'aug' : AUGMENTED_TRIAD
 };
 
-function parseChord(chord) {
-	var parsedChord = chord.match(CHORD_REGEX);
-	var root = parsedChord[1];
-	var quality = parsedChord[2];
-
-	return {
-		root    : Notes[root],
-		quality : Qualities[quality]
-	};
-}
+var Inversions = {
+	0 : ROOT_POSITION,
+	1 : FIRST_INVERSION,
+	2 : SECOND_INVERSION
+};
 
 /**
  * Generates a chord.
@@ -47,12 +40,20 @@ function parseChord(chord) {
  *
  * @returns {array}    Chord
  */
-export function chord(chord, inversion = ROOT_POSITION) {
+export function chord(chord, inversion = 0) {
 	var chordNotes = [];
-	var parsedChord = parseChord(chord);
+	var [, root, octave, quality] = chord.match(CHORD_REGEX);
 
-	parsedChord.quality.forEach(function(value, index) {
-		chordNotes.push(value + parsedChord.root + inversion[index]);
+	if (octave === '') {
+		octave = 4;
+	}
+
+	root = note(root + octave);
+	quality = Qualities[quality];
+	inversion = Inversions[inversion];
+
+	quality.forEach(function(value, index) {
+		chordNotes.push(value + root + inversion[index]);
 	});
 
 	return chordNotes;

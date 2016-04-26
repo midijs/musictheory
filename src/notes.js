@@ -1,4 +1,4 @@
-export default {
+const NOTES = {
 	'C0' : 0, 'C#0' : 1, 'D0' : 2, 'D#0' : 3, 'E0' : 4, 'F0' : 5, 'F#0' : 6,
 	'G0' : 7, 'G#0' : 8, 'A0' : 9, 'A#0' : 10, 'B0' : 11, 'C1' : 12, 'C#1' : 13,
 	'D1' : 14, 'D#1' : 15, 'E1' : 16, 'F1' : 17, 'F#1' : 18, 'G1' : 19,
@@ -22,3 +22,11 @@ export default {
 	'D10' : 122, 'D#10' : 123, 'E10' : 124, 'F10' : 125, 'F#10' : 126,
 	'G10' : 127,
 };
+
+export function note(noteString) {
+	if (typeof noteString === 'number') {
+		return noteString;
+	}
+	noteString = noteString.toUpperCase();
+	return NOTES[noteString];
+}
