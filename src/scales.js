@@ -1,4 +1,5 @@
-import {TONE, SEMITONE} from './intervals';
+import {TONE, SEMITONE, PERFECT_OCTAVE} from './intervals';
+import {note as getNote} from './notes';
 
 const CHROMATIC_SCALE = [SEMITONE, SEMITONE, SEMITONE, SEMITONE, SEMITONE,
 	SEMITONE, SEMITONE, SEMITONE, SEMITONE, SEMITONE, SEMITONE, SEMITONE];
@@ -12,5 +13,30 @@ const MIXOLYDIAN_MODE = [TONE, TONE, SEMITONE, TONE, TONE, SEMITONE, TONE];
 const AEOLIAN_MODE = [TONE, SEMITONE, TONE, TONE, SEMITONE, TONE, TONE];
 const LOCRIAN_MODE = [SEMITONE, TONE, TONE, SEMITONE, TONE, TONE, TONE];
 
-const MAJOR_SCALE = IONIAN_MODE;
-const MINOR_SCALE = AEOLIAN_MODE;
+var Scales = {
+	ionian     : IONIAN_MODE,
+	dorian     : DORIAN_MODE,
+	phrygian   : PHRYGIAN_MODE,
+	lydian     : LYDIAN_MODE,
+	mixolydian : MIXOLYDIAN_MODE,
+	aeolian    : AEOLIAN_MODE,
+	locrian    : LOCRIAN_MODE,
+	major      : IONIAN_MODE,
+	minor      : AEOLIAN_MODE
+};
+
+export function scale(root, scale, length) {
+	scale = Scales[scale];
+	var notes = [];
+	var note = getNote(root);
+	for (let i = 0; i < length; i++) {
+		let octave = Math.floor(i / scale.length) * PERFECT_OCTAVE;
+		note = note + scale[i % scale.length];
+		notes.push(note + octave);
+	}
+	return notes;
+}
+
+export function registerScale(name, scale) {
+	Scales[name] = scale;
+}

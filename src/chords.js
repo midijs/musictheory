@@ -16,6 +16,8 @@ const SECOND_INVERSION = [PERFECT_OCTAVE, PERFECT_OCTAVE,
 
 const CHORD_REGEX = /^([cdefgab])#?([0-9]|)(M|m|maj|min|dim|aug|)$/i;
 
+const DEFAULT_OCTAVE = 4;
+
 var Qualities = {
 	''    : MAJOR_TRIAD,
 	'M'   : MAJOR_TRIAD,
@@ -41,11 +43,15 @@ var Inversions = {
  * @returns {array}    Chord
  */
 export function chord(chord, inversion = 0) {
-	var chordNotes = [];
-	var [, root, octave, quality] = chord.match(CHORD_REGEX);
+	if (Array.isArray(chord)) {
+		return chord;
+	}
+
+	let chordNotes = [];
+	let [, root, octave, quality] = chord.match(CHORD_REGEX);
 
 	if (octave === '') {
-		octave = 4;
+		octave = DEFAULT_OCTAVE;
 	}
 
 	root = note(root + octave);
@@ -58,3 +64,7 @@ export function chord(chord, inversion = 0) {
 
 	return chordNotes;
 };
+
+export function registerChord(quality, intervals) {
+	Qualities[quality] = intervals;
+}

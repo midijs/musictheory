@@ -1,6 +1,6 @@
 {
   "name": "musictheory",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Music theory helper",
   "main": "dist/index.js",
   "scripts": {
