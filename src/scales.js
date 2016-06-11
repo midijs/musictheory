@@ -27,12 +27,11 @@ var Scales = {
 
 export function scale(root, scale, length) {
 	scale = Scales[scale];
-	var notes = [];
-	var note = getNote(root);
+	let notes = [];
+	let note = getNote(root);
 	for (let i = 0; i < length; i++) {
-		let octave = Math.floor(i / scale.length) * PERFECT_OCTAVE;
 		note = note + scale[i % scale.length];
-		notes.push(note + octave);
+		notes.push(note);
 	}
 	return notes;
 }
